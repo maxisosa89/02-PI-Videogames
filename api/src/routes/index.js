@@ -25,8 +25,8 @@ const getApiInfo = async () => {
         }
     }
     apiInfo = apiInfo.map(e => {
-        let { id, name, released, rating, platforms } = e;
-        return { id, name, released, rating, platforms };
+        let { id, name, released, rating, platforms, background_image } = e;
+        return { id, name, released, rating, platforms, background_image };
     })
     return apiInfo;
 }
@@ -53,14 +53,16 @@ const getAllVideogames = async () => {
 const getSearchNameApi = async (n) => {
     let resultApi = await axios.get(`https://api.rawg.io/api/games?search=${n}&key=${YOUR_API_KEY}`);
     resultApi = resultApi.data.results.map(e => {
-        let { id, name, released, rating, platforms } = e;
-        return { id, name, released, rating, platforms };
+        let { id, name, released, rating, platforms, background_image } = e;
+        return { id, name, released, rating, platforms, background_image };
     })
     return resultApi;
 }
 
 const getSearchNameDb = async (n) => {
-    return [];
+    let allDb = await Videogame.findAll();
+    const result = await allDb.filter(e => e.name.toLowerCase().includes(n.toLowerCase()));
+    return result;
 }
 
 const getAllSearchName = async (n) => {
@@ -89,7 +91,11 @@ router.get('/videogames', async (req, res) => {
     } else {
         result = await getAllSearchName(name);
     }
-    res.send(result);
+    if (result.length > 0) {
+        res.send(result);
+    } else {
+        res.send("Videogame not found")
+    }
 })
 
 router.get('/genres', async (req, res) => {
@@ -105,6 +111,25 @@ router.get('/genres', async (req, res) => {
         resultGenres = await Genre.findAll();
     }
     res.send(resultGenres);
+})
+
+router.post('/videogame', async (req, res) => {
+    /* { 
+        "name": "Maxi",
+        "description": "Description sarasa",
+        "released": "18-12-1989",
+        "rating": "5",
+        "platforms": ["PC"],
+        "background_image": "url de imagen",
+        "genres": ["Action", "RPG"]
+    } */
+    const { name, description, released, rating, platforms, background_image, genres } = req.body;
+    let gameCreate = await Videogame.create({name, description, released, rating, platforms, background_image});
+    let genreCreate = await Genre.findAll({
+        where: {name: genres}
+    })
+    gameCreate.addGenre(genreCreate);
+    res.send("Videogame create");
 })
 
 module.exports = router;
