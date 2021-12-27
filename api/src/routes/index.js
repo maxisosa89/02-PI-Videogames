@@ -98,7 +98,7 @@ router.get('/videogames', async (req, res) => {
     }
 })
 
-router.get('/videogames/:idVideogame', async (req, res) => {
+router.get('/videogame/:idVideogame', async (req, res) => {
     const { idVideogame } = req.params;
     if (!isNaN(idVideogame)){
         const videogameIdUrl = await axios.get(`https://api.rawg.io/api/games/${idVideogame}?key=${YOUR_API_KEY}`);
