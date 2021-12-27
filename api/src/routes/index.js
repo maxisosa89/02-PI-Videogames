@@ -25,8 +25,8 @@ const getApiInfo = async () => {
         }
     }
     apiInfo = apiInfo.map(e => {
-        let { id, name, released, rating, platforms, background_image } = e;
-        return { id, name, released, rating, platforms, background_image };
+        let { id, name, released, rating, platforms, background_image, genres } = e;
+        return { id, name, released, rating, platforms, background_image, genres };
     })
     return apiInfo;
 }
@@ -53,8 +53,8 @@ const getAllVideogames = async () => {
 const getSearchNameApi = async (n) => {
     let resultApi = await axios.get(`https://api.rawg.io/api/games?search=${n}&key=${YOUR_API_KEY}`);
     resultApi = resultApi.data.results.map(e => {
-        let { id, name, released, rating, platforms, background_image } = e;
-        return { id, name, released, rating, platforms, background_image };
+        let { id, name, released, rating, platforms, background_image, genres } = e;
+        return { id, name, released, rating, platforms, background_image, genres };
     })
     return resultApi;
 }
@@ -96,6 +96,27 @@ router.get('/videogames', async (req, res) => {
     } else {
         res.send("Videogame not found")
     }
+})
+
+router.get('/videogames/:idVideogame', async (req, res) => {
+    const { idVideogame } = req.params;
+    if (!isNaN(idVideogame)){
+        const videogameIdUrl = await axios.get(`https://api.rawg.io/api/games/${idVideogame}?key=${YOUR_API_KEY}`);
+        const { name, released, rating, platforms, background_image, genres, description } = videogameIdUrl.data;
+        const videogameIdInfo = { idVideogame, name, released, rating, platforms, background_image, genres, description }
+        res.send(videogameIdInfo)
+    } else {
+        const videogameIdBd = await Videogame.findByPk(idVideogame, {
+            include: 
+            {
+            model: Genre,
+            attributes: ["name"],
+            through: {
+                attributes: [],
+            },
+            }});
+        res.send(videogameIdBd);
+    } 
 })
 
 router.get('/genres', async (req, res) => {
