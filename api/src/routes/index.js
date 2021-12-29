@@ -28,6 +28,15 @@ const getApiInfo = async () => {
         let { id, name, released, rating, platforms, background_image, genres } = e;
         return { id, name, released, rating, platforms, background_image, genres };
     })
+    
+    
+    /* let apiInfo = require('./videogames.json')
+    apiInfo = apiInfo.results
+    apiInfo = apiInfo.map(e => {
+        let { id, name, released, rating, platforms, background_image, genres } = e;
+        return { id, name, released, rating, platforms, background_image, genres };
+    }) */
+    
     return apiInfo;
 }
 
@@ -52,7 +61,7 @@ const getAllVideogames = async () => {
 
 const getSearchNameApi = async (n) => {
     let resultApi = await axios.get(`https://api.rawg.io/api/games?search=${n}&key=${YOUR_API_KEY}`);
-    resultApi = resultApi.data.results.map(e => {
+    resultApi = await resultApi.data.results.map(e => {
         let { id, name, released, rating, platforms, background_image, genres } = e;
         return { id, name, released, rating, platforms, background_image, genres };
     })
@@ -60,8 +69,16 @@ const getSearchNameApi = async (n) => {
 }
 
 const getSearchNameDb = async (n) => {
-    let allDb = await Videogame.findAll();
-    const result = await allDb.filter(e => e.name.toLowerCase().includes(n.toLowerCase()));
+    let allDb = await Videogame.findAll({
+        include: {
+            model: Genre,
+            attributes: ['name'],
+            through: {
+                attributes: [],
+            }
+        }
+    })
+    let result = await allDb.filter(e => e.name.toLowerCase().includes(n.toLowerCase()));
     return result;
 }
 
