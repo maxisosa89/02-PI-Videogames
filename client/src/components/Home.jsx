@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGenres, getVideogames, orderByName, orderByRating, getNameVideogame } from "../actions/index";
+import { getGenres, getVideogames, orderByName, orderByRating, getNameVideogame, filterByCreate, filterByGenre } from "../actions/index";
 import { Link } from 'react-router-dom';
 import Paged from './Paged'
 import Card from './Card'
@@ -75,6 +75,14 @@ export default function Home(){
         setOrderByR(e.target.value)
     }
 
+    function handleFilterGenre(e){
+        dispatch(filterByGenre(e.target.value))
+    }
+
+    function handleFilterCreate(e){
+        dispatch(filterByCreate(e.target.value))
+    }
+
     return (
         <div>
             <nav>
@@ -97,7 +105,7 @@ export default function Home(){
                     <option value="-rating">- Rating</option>
                     <option value="+rating">+ Rating</option>
                 </select>
-                <select id="selectGenres">
+                <select onChange={e => {handleFilterGenre(e)}} id="selectGenres">
                     <option value="titleSelect">Genres</option>
                     {
                         genres.map(el => (
@@ -105,7 +113,7 @@ export default function Home(){
                         ))
                     }
                 </select>
-                <select id="selectDBApi">    
+                <select onChange={e => {handleFilterCreate(e)}} id="selectDBApi">    
                     <option value="titleSelect" >DB-Api</option>
                     <option value="Create" >Create</option>
                     <option value="Existent" >Existent</option>
@@ -125,7 +133,11 @@ export default function Home(){
                         
                         return (
                             <Link to = {"/videogame/" + el.id}>
-                                <Card name={el.name} rating={el.rating} background_image={el.background_image} genres={el.genres.map(e => e.name + ". ")}/>
+                                <Card
+                                    name={el.name}
+                                    rating={el.rating}
+                                    background_image={el.background_image}
+                                    genres={el.genres.map(e => e.name + ". ")}/>
                             </Link>
                         )
                         

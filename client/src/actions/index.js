@@ -52,3 +52,17 @@ export function orderByRating(payload){
         payload
     }
 }
+
+export function filterByGenre(payload){
+    return {
+        type: 'FILTER_BY_GENRE',
+        payload
+    }
+}
+
+export function filterByCreate(payload){
+    return {
+        type: 'FILTER_BY_CREATE',
+        payload
+    }
+}
