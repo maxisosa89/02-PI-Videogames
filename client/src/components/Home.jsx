@@ -18,7 +18,7 @@ export default function Home(){
     const [name, setName] = useState("")
     const [orderByN,setOrderByN] = useState('')
     const [orderByR,setOrderByR] = useState('')
-
+    const [genre,setGenre] = useState([])
 
     const paged = (pageNumber) => {
         setCurrentPage(pageNumber)
@@ -40,14 +40,17 @@ export default function Home(){
         dispatch(getVideogames());
         setOrderByN('titleSelect')
         setOrderByR('titleSelect')
+        setGenre([])
         resetFilter();
     }
 
     function resetFilter() {
         document.getElementById("selectA-Z").value = "titleSelect"
         document.getElementById("selectRating").value = "titleSelect"
-        document.getElementById("selectGenres").value = "titleSelect"
         document.getElementById("selectDBApi").value = "titleSelect"
+        genres.map((e) => {
+            document.getElementById(e.name).checked = false
+        })
     }
 
     function handleInputChange(e){
@@ -76,11 +79,22 @@ export default function Home(){
     }
 
     function handleFilterGenre(e){
-        dispatch(filterByGenre(e.target.value))
+        dispatch(filterByGenre(e))
     }
 
     function handleFilterCreate(e){
         dispatch(filterByCreate(e.target.value))
+    }
+    useEffect(() => {
+        handleFilterGenre(genre)
+    }, [genre]);
+
+    function handleCheck(e){
+        if(e.target.checked){
+            setGenre([...genre, e.target.value])
+        } else {
+            setGenre(genre.filter(el => el !== e.target.value))
+        }
     }
 
     return (
@@ -105,19 +119,33 @@ export default function Home(){
                     <option value="-rating">- Rating</option>
                     <option value="+rating">+ Rating</option>
                 </select>
-                <select onChange={e => {handleFilterGenre(e)}} id="selectGenres">
-                    <option value="titleSelect">Genres</option>
-                    {
-                        genres.map(el => (
-                            <option value={el.name}>{el.name}</option>
-                        ))
-                    }
-                </select>
                 <select onChange={e => {handleFilterCreate(e)}} id="selectDBApi">    
                     <option value="titleSelect" >DB-Api</option>
                     <option value="Create" >Create</option>
                     <option value="Existent" >Existent</option>
                 </select>
+
+
+                <h4>Genres</h4>
+                <form>
+                    {
+                        genres.map(el => (
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    value={el.name}
+                                    id={el.name}
+                                    onChange={e => {handleCheck(e)}}
+                                />
+                                {el.name}
+                            </label>
+                        ))
+                    }
+                </form>
+
+
+
+                
             </div>
             <div>
                 <Paged 

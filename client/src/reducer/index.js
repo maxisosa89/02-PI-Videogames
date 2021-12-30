@@ -74,15 +74,10 @@ function rootReducer (state= initialState, action) {
             }
         case 'FILTER_BY_GENRE':
             const allV2 = state.all
-            console.log(action.payload)
-            const genreFiltered = 
-                action.payload === "titleSelect" ?
+            const genreFiltered =
+                action.payload === [] ?
                 allV2 :
-                allV2.filter(el => {
-                    for (let i = 0; i < el.genres.length; i++){
-                        if (el.genres[i].name === action.payload) return el
-                    }
-                })
+                allV2.filter(el => action.payload.every((g) => el.genres.map((n) => n.name).includes(g)))
             return {
                 ...state,
                 videogames: genreFiltered
