@@ -9,7 +9,6 @@ import Card from './Card'
 export default function Home(){
     const dispatch = useDispatch();
     const allVideogames = useSelector((state) => state.videogames);
-
     const [currentPage, setCurrentPage] = useState(1)
     const [videogamesPerPage, setVideogamesPerPage] = useState(15)
     const indexOfLastVideogame = currentPage * videogamesPerPage
@@ -51,6 +50,7 @@ export default function Home(){
         genres.map((e) => {
             document.getElementById(e.name).checked = false
         })
+        document.getElementById("searchBar").value = ""
     }
 
     function handleInputChange(e){
@@ -96,14 +96,13 @@ export default function Home(){
             setGenre(genre.filter(el => el !== e.target.value))
         }
     }
-
     return (
         <div>
             <nav>
                 <h1>Titulo</h1>
                 <button onClick={e => {handleClick(e)}}>Refresh</button>
                 <div>
-                    <input type="text" placeholder="Search videogame..." onChange={(e) => handleInputChange(e)}/>
+                    <input type="text" placeholder="Search videogame..." onChange={(e) => handleInputChange(e)} id="searchBar"/>
                     <button type='submit' onClick={(e) => handleSubmit(e)}>Search</button>
                 </div>
                 <Link to='/videogame'>New Videogame</Link>
@@ -124,8 +123,6 @@ export default function Home(){
                     <option value="Create" >Create</option>
                     <option value="Existent" >Existent</option>
                 </select>
-
-
                 <h4>Genres</h4>
                 <form>
                     {
@@ -142,10 +139,6 @@ export default function Home(){
                         ))
                     }
                 </form>
-
-
-
-                
             </div>
             <div>
                 <Paged 
@@ -156,9 +149,7 @@ export default function Home(){
             </div>
             <div>
                 {
-                    
                     currentVideogames?.map( el => {
-                        
                         return (
                             <Link to = {"/videogame/" + el.id}>
                                 <Card
@@ -168,16 +159,9 @@ export default function Home(){
                                     genres={el.genres.map(e => e.name + ". ")}/>
                             </Link>
                         )
-                        
                     })
                 }
             </div>
-
-
-
-
-
-
         </div>
     )
 }
