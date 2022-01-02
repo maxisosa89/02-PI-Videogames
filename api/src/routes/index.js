@@ -107,6 +107,7 @@ router.get('/videogames', async (req, res) => {
         result = await getAllVideogames();
     } else {
         result = await getAllSearchName(name);
+        if (result.length > 15) result = result.slice(0, 15)
     }
     if (result.length > 0) {
         res.send(result);

@@ -151,7 +151,8 @@ export default function Home(){
             </div>
             <div>
                 {
-                    currentVideogames?.map( el => {
+                    currentVideogames.length > 0 ?
+                    currentVideogames.map( el => {
                         return (
                             <Link to = {"/videogame/" + el.id}>
                                 <Card
@@ -161,7 +162,8 @@ export default function Home(){
                                     genres={el.genres.map(e => e.name + ". ")}/>
                             </Link>
                         )
-                    })
+                    }) :
+                    <p>Loading...</p>
                 }
             </div>
         </div>
