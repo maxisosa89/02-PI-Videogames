@@ -88,6 +88,10 @@ function rootReducer (state= initialState, action) {
                 ...state,
                 detail: action.payload
             }
+        case "POST_VIDEOGAME":
+            return {
+                ...state
+            }
         default: return state
     }
 }

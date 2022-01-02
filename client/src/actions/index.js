@@ -80,3 +80,10 @@ export function getDetail(payload){
         }
     }
 }
+
+export function postVideogame(payload) {
+    return async function(dispatch){
+        const info = await axios.post("http://localhost:3001/videogame", payload)
+        return info
+    }
+}

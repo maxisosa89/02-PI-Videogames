@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Paged from './Paged'
 import Card from './Card'
 
+
 export default function Home(){
     const dispatch = useDispatch();
     const allVideogames = useSelector((state) => state.videogames);
@@ -126,7 +127,6 @@ export default function Home(){
                 <h4>Genres</h4>
                 <form>
                     {   
-                        genres.length > 0 ?
                         genres.map(el => { return(
                             <label>
                                 <input
@@ -137,9 +137,9 @@ export default function Home(){
                                 />
                                 {el.name}
                             </label>
-                        )}) :
-                        <p>Loading</p>
+                        )})
                     }
+
                 </form>
             </div>
             <div>

@@ -15,7 +15,7 @@ export default function Detail(){
         <div>
             <nav>
                 <h1>Titulo</h1>
-                <Link to='/videogames'>Go Home</Link>
+                <Link to='/home'>Go Home</Link>
             </nav>
             <div>
                 {

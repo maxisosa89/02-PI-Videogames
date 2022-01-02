@@ -146,7 +146,7 @@ router.get('/genres', async (req, res) => {
                 id, name
             })
         });
-        resultGenres = await Genre.findAll();
+        resultGenres = createGenres
     }
     res.send(resultGenres);
 })
