@@ -125,8 +125,9 @@ export default function Home(){
                 </select>
                 <h4>Genres</h4>
                 <form>
-                    {
-                        genres.map(el => (
+                    {   
+                        genres.length > 0 ?
+                        genres.map(el => { return(
                             <label>
                                 <input
                                     type="checkbox"
@@ -136,7 +137,8 @@ export default function Home(){
                                 />
                                 {el.name}
                             </label>
-                        ))
+                        )}) :
+                        <p>Loading</p>
                     }
                 </form>
             </div>
