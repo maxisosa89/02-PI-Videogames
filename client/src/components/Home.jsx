@@ -5,6 +5,7 @@ import { getGenres, getVideogames, orderByName, orderByRating, getNameVideogame,
 import { Link } from 'react-router-dom';
 import Paged from './Paged'
 import Card from './Card'
+import styles from './styles/Home.module.css'
 
 
 export default function Home(){
@@ -143,14 +144,20 @@ export default function Home(){
                 </form>
             </div>
             <div>
-                <Paged 
-                    videogamesPerPage={videogamesPerPage}
-                    allVideogames={allVideogames.length}
-                    paged={paged}
-                />
+                {
+                    currentVideogames !== "Videogame not f" ?
+                    <Paged 
+                        videogamesPerPage={videogamesPerPage}
+                        allVideogames={allVideogames.length}
+                        paged={paged}
+                    />:
+                    <button>1</button>
+                }
             </div>
             <div>
                 {
+                    currentVideogames === "Videogame not f" ?
+                    <p>No videogames found</p> :
                     currentVideogames.length > 0 ?
                     currentVideogames.map( el => {
                         return (
