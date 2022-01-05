@@ -1,4 +1,5 @@
 import React from "react";
+import styles from './styles/Paged.module.css'
 
 export default function Paged ({videogamesPerPage, allVideogames, paged}) {
     const pageNumber = []
@@ -10,8 +11,8 @@ export default function Paged ({videogamesPerPage, allVideogames, paged}) {
             <ul>
                 {
                     pageNumber && pageNumber.map( el => (
-                        <li key={el}>
-                            <button onClick={() => paged(el)}>{el}</button>
+                        <li key={el} className={styles.liPaged}>
+                            <button onClick={() => paged(el)} className={styles.btnPaged}>{el}</button>
                         </li>
                     ))
                 }

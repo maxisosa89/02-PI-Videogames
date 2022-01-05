@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { postVideogame, getGenres } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
+import styles from './styles/Form.module.css'
 
 function validate(input) {
     let errors = {};
@@ -55,7 +56,7 @@ export default function Form(){
     }
 
     function handleSelect(e){
-        if(!input.platforms.includes(e.target.value)){
+        if(!input.platforms.includes(e.target.value) && e.target.value !== "Platforms"){
             setInput({
                 ...input,
                 platforms: [...input.platforms, e.target.value]
@@ -75,6 +76,13 @@ export default function Form(){
                 genres: input.genres.filter(el => el !== e.target.value)
             })
         }
+    }
+
+    function handleDelete(e){
+        setInput({
+            ...input,
+            platforms: input.platforms.filter(el => el !== e)
+        })
     }
 
     function handleSubmit(e) {
@@ -101,87 +109,108 @@ export default function Form(){
     }
 
     return (
-        <div>
-            <h1>Create new videogame</h1>
-            <form onSubmit={e => handleSubmit(e)}>
-                <h4>Name *: </h4>
-                <input
-                    type="text"
-                    autoComplete="off"
-                    name="name"
-                    onChange={e => handleChange(e)}/>
-                <h4>Released: </h4>
-                {
-                    errors.dateType && (
-                        <p>{errors.dateType}</p> )
-                }
-                <input
-                    type="text"
-                    autoComplete="off"
-                    name="released"
-                    onChange={e => handleChange(e)}/>
-                <h4>Rating: </h4>
-                {
-                    errors.ratingRange && (
-                        <p>{errors.ratingRange}</p> )
-                }
-                <input
-                    type="number"
-                    min= "0"
-                    max= "5"
-                    step="0.01"
-                    name="rating"
-                    onChange={e => handleChange(e)}/>
-                <h4>Image URL: </h4>
-                {
-                    errors.imageUrl && (
-                        <p>{errors.imageUrl}</p> )
-                }
-                <input
-                    type="text"
-                    name="background_image"
-                    onChange={e => handleChange(e)}/>
-                <h4>Platforms *: </h4>
-                <select onChange={e => handleSelect(e)}>
-                <option value="platforms">Platforms</option>
-                {
-                    
-                    platforms.map(el => (
-                        <option
-                            value={el}>
-                            {el}
-                        </option>
-                    ))
-                    
-                }
-                </select >
-                <h4>Genres: </h4>
-                {
-                    genres.map(el => (
-                        <label>
-                            <input
-                                type="checkbox"
-                                value={el.name}
-                                id={el.name}
-                                onChange={e => handleCheck(e)}
-                            />
-                            {el.name}
-                        </label>
-                    ))
-                }
-                <h4>Description *: </h4>
-                <input
-                    type="text"
-                    autoComplete="off"
-                    name="description"
-                    onChange={e => handleChange(e)}/>
-                {
-                    errors.error && (
-                        <p>{errors.error}</p>
-                    )
-                }
-                <button type='submit'>Create</button>
-            </form>
+        <div className={styles.containerGlobalForm}>
+            <nav className={styles.navForm}>
+                <Link to = '/' className={styles.containerTitleForm}>
+                    <h3 className={styles.titleForm}>Videogames</h3>
+                </Link>
+                <Link to = '/home'>
+                    <button className={styles.btnForm}>Go home</button>
+                </Link>
+            </nav>
+            <div className={styles.containerInfoForm}>
+                <h1>Create new videogame</h1>
+                <form onSubmit={e => handleSubmit(e)}>
+                    <h4>Name *: </h4>
+                    <input
+                        type="text"
+                        autoComplete="off"
+                        name="name"
+                        onChange={e => handleChange(e)}/>
+                    <h4>Released: </h4>
+                    {
+                        errors.dateType && (
+                            <p>{errors.dateType}</p> )
+                    }
+                    <input
+                        type="text"
+                        autoComplete="off"
+                        name="released"
+                        onChange={e => handleChange(e)}/>
+                    <h4>Rating: </h4>
+                    {
+                        errors.ratingRange && (
+                            <p>{errors.ratingRange}</p> )
+                    }
+                    <input
+                        type="number"
+                        min= "0"
+                        max= "5"
+                        step="0.01"
+                        name="rating"
+                        onChange={e => handleChange(e)}/>
+                    <h4>Image URL: </h4>
+                    {
+                        errors.imageUrl && (
+                            <p>{errors.imageUrl}</p> )
+                    }
+                    <input
+                        type="text"
+                        name="background_image"
+                        onChange={e => handleChange(e)}/>
+                    <h4>Platforms *: </h4>
+                    <select onChange={e => handleSelect(e)}>
+                    <option value="platforms">Platforms</option>
+                    {
+                        
+                        platforms.map(el => (
+                            <option value={el} key={el}>
+                                {el}
+                            </option>
+                        ))
+                        
+                    }
+                    </select >
+                    <h4>Genres: </h4>
+                    <ul>
+                        {
+                            genres.map(el => (
+                                <li key={el.name}>
+                                    <input
+                                        type="checkbox"
+                                        value={el.name}
+                                        id={el.name}
+                                        onChange={e => handleCheck(e)}
+                                    />
+                                    {el.name}
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    <h4>Description *: </h4>
+                    <input
+                        type="text"
+                        autoComplete="off"
+                        name="description"
+                        onChange={e => handleChange(e)}/>
+                    {
+                        errors.error && (
+                            <p>{errors.error}</p>
+                        )
+                    }
+                    <button type='submit'>Create</button>
+                </form>
+                <div>
+                    <h4>Platforms selected:</h4>
+                    <ul className={styles.ulForm}>
+                        {
+                            input.platforms.map(el => (
+                                <li key={el}>{el}<button type="button" onClick={() => handleDelete(el)} className={styles.btnXForm}>X</button></li>
+                            ))
+                        }         
+                    </ul>
+                </div>
+            </div>
         </div>
     )
 }

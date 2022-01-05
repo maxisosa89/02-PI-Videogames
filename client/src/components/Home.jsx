@@ -20,6 +20,7 @@ export default function Home(){
     const [orderByN,setOrderByN] = useState('')
     const [orderByR,setOrderByR] = useState('')
     const [genre,setGenre] = useState([])
+    const [filterApiDb,setFilterApiDb] = useState('titleSelect')
 
     const paged = (pageNumber) => {
         setCurrentPage(pageNumber)
@@ -41,6 +42,7 @@ export default function Home(){
         dispatch(getVideogames());
         setOrderByN('titleSelect')
         setOrderByR('titleSelect')
+        setFilterApiDb('titleSelect')
         setGenre([])
         resetFilter();
     }
@@ -86,6 +88,7 @@ export default function Home(){
 
     function handleFilterCreate(e){
         dispatch(filterByCreate(e.target.value))
+        setFilterApiDb(e.target.value)
     }
     useEffect(() => {
         handleFilterGenre(genre)
@@ -99,79 +102,93 @@ export default function Home(){
         }
     }
     return (
-        <div>
-            <nav>
-                <h1>Titulo</h1>
-                <button onClick={e => {handleClick(e)}}>Refresh</button>
-                <div>
-                    <input type="text" placeholder="Search videogame..." onChange={(e) => handleInputChange(e)} id="searchBar"/>
-                    <button type='submit' onClick={(e) => handleSubmit(e)}>Search</button>
+        <div className={styles.containerGlobalHome}>
+            <div className={styles.fixedNavHome}>
+                <nav className={styles.navHome}>
+                    <Link to='/' className={styles.containerTitleHome}><h1 className={styles.titleHome}>Videogames</h1></Link>
+                    
+                    <button onClick={e => {handleClick(e)}} className={styles.btnHome}>Refresh</button>
+                    <div className={styles.containerSearchBarHome}>
+                        <input type="text" placeholder="Search videogame..." onChange={(e) => handleInputChange(e)} id="searchBar"/>
+                        <button type='submit' onClick={(e) => handleSubmit(e)} className={styles.btnHome}>Search</button>
+                    </div>
+                    <Link to='/videogame' className={styles.containerCreateHome}><h3 className={styles.createHome}>New Videogame</h3></Link>
+                </nav>
+                <div id="select" className={styles.containerFiltersHome}>
+                    <select onChange={e => {handleOrderByName(e)}} id="selectA-Z" className={styles.selectHome}>
+                        <option value="titleSelect">Order by</option>
+                        <option value="a-z">A-Z</option>
+                        <option value="z-a">Z-A</option>
+                    </select>
+                    <select onChange={e => {handleOrderByRating(e)}} id="selectRating" className={styles.selectHome}>
+                        <option value="titleSelect">Order by</option>
+                        <option value="-rating">- Rating</option>
+                        <option value="+rating">+ Rating</option>
+                    </select>
+                    <select onChange={e => {handleFilterCreate(e)}} id="selectDBApi" className={styles.selectHome} defaultValue="titleSelect" >    
+                        <option value="titleSelect" >DB-Api</option>
+                        <option value="Create" >Create</option>
+                        <option value="Existent" >Existent</option>
+                    </select>
                 </div>
-                <Link to='/videogame'>New Videogame</Link>
-            </nav>
-            <div id="select">
-                <select onChange={e => {handleOrderByName(e)}} id="selectA-Z">
-                    <option value="titleSelect">Order by</option>
-                    <option value="a-z">A-Z</option>
-                    <option value="z-a">Z-A</option>
-                </select>
-                <select onChange={e => {handleOrderByRating(e)}} id="selectRating">
-                    <option value="titleSelect">Order by</option>
-                    <option value="-rating">- Rating</option>
-                    <option value="+rating">+ Rating</option>
-                </select>
-                <select onChange={e => {handleFilterCreate(e)}} id="selectDBApi">    
-                    <option value="titleSelect" >DB-Api</option>
-                    <option value="Create" >Create</option>
-                    <option value="Existent" >Existent</option>
-                </select>
-                <h4>Genres</h4>
-                <form>
-                    {   
-                        genres.map(el => { return(
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    value={el.name}
-                                    id={el.name}
-                                    onChange={e => {handleCheck(e)}}
-                                />
-                                {el.name}
-                            </label>
-                        )})
+                <div className={styles.pagedHome}>
+                    {
+                        currentVideogames !== "Videogame not f" ?
+                        <Paged 
+                            videogamesPerPage={videogamesPerPage}
+                            allVideogames={allVideogames.length}
+                            paged={paged}
+                        />:
+                        <p></p>
                     }
-
-                </form>
+                </div>
+                
             </div>
-            <div>
-                {
-                    currentVideogames !== "Videogame not f" ?
-                    <Paged 
-                        videogamesPerPage={videogamesPerPage}
-                        allVideogames={allVideogames.length}
-                        paged={paged}
-                    />:
-                    <button>1</button>
-                }
-            </div>
-            <div>
-                {
-                    currentVideogames === "Videogame not f" ?
-                    <p>No videogames found</p> :
-                    currentVideogames.length > 0 ?
-                    currentVideogames.map( el => {
-                        return (
-                            <Link to = {"/videogame/" + el.id}>
-                                <Card
-                                    name={el.name}
-                                    rating={el.rating}
-                                    background_image={el.background_image}
-                                    genres={el.genres.map(e => e.name + ". ")}/>
-                            </Link>
-                        )
-                    }) :
-                    <p>Loading...</p>
-                }
+            <div className={styles.containerGenresCard}>
+                <div className={styles.containerGenres}>
+                    <h4 className={styles.titleGenres}>Genres</h4>
+                    <form>
+                    <ul className={styles.listGenres}>
+                        {   
+                            
+                            genres.map(el => { return(
+                                <li key={el.id}>
+                                    <input
+                                        type="checkbox"
+                                        value={el.name}
+                                        id={el.name}
+                                        onChange={e => {handleCheck(e)}}
+                                    />
+                                    {el.name}
+                                </li>
+                            )})
+                            
+                        }
+                    </ul>
+                    </form>
+                </div>
+            
+                <div className={styles.containerCardsHome}>
+                    {
+                        currentVideogames === "Videogame not f" || (currentVideogames.length === 0 && (genre.length > 0 || filterApiDb !== "titleSelect")) ?
+                        <p>No videogames found</p> :
+                        currentVideogames.length > 0 ?
+                        currentVideogames.map( el => {
+                            return (
+                                <div className={styles.cardHome} key={el.id}>
+                                    <Link to = {"/videogame/" + el.id} className={styles.linkCardHome}>
+                                        <Card
+                                            name={el.name}
+                                            rating={el.rating}
+                                            background_image={el.background_image}
+                                            genres={el.genres.map(e => e.name + ". ")}/>
+                                    </Link>
+                                </div>
+                            )
+                        }) :
+                        <p>Loading...</p>
+                    }
+                </div>
             </div>
         </div>
     )

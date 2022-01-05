@@ -1,3 +1,56 @@
-img {
-    width: 400px;
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.containerGlobalCard {
+    background-color: #04293A;
+    border: #041C32 solid;
+    height: 300px;
+    width: 350px;
+    margin: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 3px 6px 3px rgba(0, 0, .5, .5);
+}
+
+.containerTextCard {
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    font-size: 13px;
+}
+
+.containerNicknameCard {
+    background-color: #041C32;
+    border: #041C32 solid;
+    margin-top: 30px;
+    box-shadow: 3px 6px 3px rgba(0, 0, .5, .5);
+}
+
+.containerStatusCard {
+    background-color: #041C32;
+    border: #041C32 solid;
+    margin-top: 50px;
+    box-shadow: 3px 6px 3px rgba(0, 0, .5, .5);
+}
+
+.containerImgCard {
+    background-color: #04293A;
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr
+}
+
+.imgCard {
+    margin: auto;
+    width: 85%;
+    border: #041C32 solid;
+    box-shadow: 3px 6px 3px rgba(0, 0, .5, .5);
+}
+
+.h3Card {
+    color: white;
 }

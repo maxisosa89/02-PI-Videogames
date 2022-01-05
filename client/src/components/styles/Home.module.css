@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.containerGlobalHome{
+    background-color: #064663;
+    padding-top: 170px;
+    padding-bottom: 25px;
+}
+
+.fixedNavHome {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    box-shadow: 1px 2px 1px rgba(0, 0, 0, .5);
+}
+
+.navHome {
+    background-color: #041C32;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 60px;
+}
+
+.containerFiltersHome {
+    background-color: #04293A;
+}
+
+.selectHome {
+    height: 25px;
+    font-size: 20px;
+    background-color: #041C32;
+    color: white;
+    border-color: white;
+    margin: 10px;
+    margin-bottom: 0;
+}
+
+.selectHome:hover {
+    cursor: pointer;
+    opacity: 80%;
+}
+
+.pagedHome {
+    background-color: #04293A;
+}
+
+.containerCardsHome {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-left: 220px;
+}
+
+.cardHome {
+    margin: auto;
+}
+
+.titleHome {
+    font-size: 30px;
+    color: white;
+}
+
+.createHome {
+    font-size: 20px;
+    color: white;
+}
+
+.containerTitleHome {
+    text-decoration: none;
+    margin-top: 8px;
+}
+
+.containerCreateHome {
+    text-decoration: none;
+    margin-top: 15px;
+}
+
+.containerSearchBarHome input, button {
+    height: 25px;
+    margin: 5px;
+    margin-top: 13px;
+    font-size: 20px;
+}
+
+.btnHome {
+    height: 25px;
+    font-size: 20px;
+    background-color: #041C32;
+    color: white;
+    border: white solid 1px;
+}
+
+.btnHome:hover {
+    cursor: pointer;
+    opacity: 80%;
+}
+
+.linkCardHome {
+    text-decoration: none;
+}
+
+.containerGenresCard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.containerGenres {
+    text-align: left;
+    padding-left: 20px;
+    margin-top: -100px;
+    width: 170px;
+    position: fixed;
+    background-color: #04293A;
+}
+
+.titleGenres {
+    height: 25px;
+    font-size: 20px;
+    color: white;
+    border-color: white;
+    
+}
+
+ul {
+    list-style: none;
+    color: white;
+}
+
+p {
+    font-size: 20px;
+    color: white;
+}
