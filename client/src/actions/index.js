@@ -36,7 +36,6 @@ export function getNameVideogame(payload) {
             console.log(err)
         }
     }
-
 }
 
 export function orderByName(payload){
