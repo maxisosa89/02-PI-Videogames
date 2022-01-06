@@ -95,3 +95,8 @@ input {
     cursor: pointer;
     opacity: 80%;
 }
+
+.contaierThreeDivs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}

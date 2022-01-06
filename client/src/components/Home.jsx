@@ -106,7 +106,6 @@ export default function Home(){
             <div className={styles.fixedNavHome}>
                 <nav className={styles.navHome}>
                     <Link to='/' className={styles.containerTitleHome}><h1 className={styles.titleHome}>Videogames</h1></Link>
-                    
                     <button onClick={e => {handleClick(e)}} className={styles.btnHome}>Refresh</button>
                     <div className={styles.containerSearchBarHome}>
                         <input type="text" placeholder="Search videogame..." onChange={(e) => handleInputChange(e)} id="searchBar"/>
@@ -148,26 +147,24 @@ export default function Home(){
                 <div className={styles.containerGenres}>
                     <h4 className={styles.titleGenres}>Genres</h4>
                     <form>
-                    <ul className={styles.listGenres}>
-                        {   
-                            
-                            genres.map(el => { return(
-                                <li key={el.id}>
-                                    <input
-                                        type="checkbox"
-                                        value={el.name}
-                                        id={el.name}
-                                        onChange={e => {handleCheck(e)}}
-                                    />
-                                    {el.name}
-                                </li>
-                            )})
-                            
-                        }
-                    </ul>
+                        <ul className={styles.listGenres}>
+                            {   
+                                genres.map(el => { return(
+                                    <li key={el.id}>
+                                        <input
+                                            type="checkbox"
+                                            value={el.name}
+                                            id={el.name}
+                                            onChange={e => {handleCheck(e)}}
+                                        />
+                                        {el.name}
+                                    </li>
+                                )})
+                                
+                            }
+                        </ul>
                     </form>
                 </div>
-            
                 <div className={styles.containerCardsHome}>
                     {
                         currentVideogames === "Videogame not f" || (currentVideogames.length === 0 && (genre.length > 0 || filterApiDb !== "titleSelect")) ?

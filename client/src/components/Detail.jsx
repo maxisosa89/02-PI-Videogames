@@ -21,7 +21,7 @@ export default function Detail(){
             <div className={styles.containerInfoDetail}>
                 {
                     Object.values(myVideogame).length > 0 ?
-                    <div className={styles.containerCharacter}>
+                    <div className={styles.containerVideogame}>
                         <div className={styles.containerImgDetail}>
                             <img src={myVideogame.background_image ? myVideogame.background_image : "https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg"} alt="not found" className={styles.imgDetail} />
                         </div>

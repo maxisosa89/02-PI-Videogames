@@ -115,6 +115,7 @@
     width: 170px;
     position: fixed;
     background-color: #04293A;
+    
 }
 
 .titleGenres {
@@ -128,6 +129,7 @@
 ul {
     list-style: none;
     color: white;
+    
 }
 
 p {

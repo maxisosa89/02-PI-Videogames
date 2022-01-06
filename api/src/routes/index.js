@@ -28,15 +28,6 @@ const getApiInfo = async () => {
         let { id, name, released, rating, platforms, background_image, genres } = e;
         return { id, name, released, rating, platforms, background_image, genres };
     })
-    
-    
-    /* let apiInfo = require('./videogames.json')
-    apiInfo = apiInfo.results
-    apiInfo = apiInfo.map(e => {
-        let { id, name, released, rating, platforms, background_image, genres } = e;
-        return { id, name, released, rating, platforms, background_image, genres };
-    }) */
-    
     return apiInfo;
 }
 
@@ -98,8 +89,6 @@ const getGenres = async () => {
     return genres;
 }
 
-
-
 router.get('/videogames', async (req, res) => {
     const { name } = req.query;
     let result;
@@ -153,15 +142,6 @@ router.get('/genres', async (req, res) => {
 })
 
 router.post('/videogame', async (req, res) => {
-    /* { 
-        "name": "Maxi",
-        "description": "Description sarasa",
-        "released": "18-12-1989",
-        "rating": "5",
-        "platforms": ["PC"],
-        "background_image": "url de imagen",
-        "genres": ["Action", "RPG"]
-    } */
     const { name, description, released, rating, platforms, background_image, genres } = req.body;
     let gameCreate = await Videogame.create({name, description, released, rating, platforms, background_image});
     let genreCreate = await Genre.findAll({
