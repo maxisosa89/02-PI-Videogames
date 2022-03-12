@@ -13,7 +13,7 @@ export default function Home(){
     const dispatch = useDispatch();
     const allVideogames = useSelector((state) => state.videogames);
     const [currentPage, setCurrentPage] = useState(1)
-    const [videogamesPerPage, setVideogamesPerPage] = useState(15)
+    const [videogamesPerPage, setVideogamesPerPage] = useState(12)
     const indexOfLastVideogame = currentPage * videogamesPerPage
     const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage
     const currentVideogames = allVideogames.slice(indexOfFirstVideogame, indexOfLastVideogame)
@@ -128,30 +128,42 @@ export default function Home(){
 
     return (
         
-        <div className={styles.containerGlobalHome}>
+        <div className={styles.containerGlobalHome} style={{backgroundColor: "#4f5b62", width:"100%"}}>
             <div className={styles.fixedNavHome}>
-                <nav className="navbar navbar-expand-xxl fixed-top navbar-dark bg-primary justify-content-center">
-                    <div className="">
+                <nav className="navbar navbar-expand-xxl fixed-top navbar-dark justify-content-center" style={{backgroundColor: "#000a12"}}>
+                    <div className="" >
                         <button className="navbar-toggler text-center" type="button" data-bs-toggle="collapse" data-bs-target="#select" aria-controls="select" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
                     </div>
                 </nav>
                 
-                <div className="container" >
+                <div className=""  style={{paddingTop:"60px"}}>
                     {/* /////// */}
-                    <div className="col collapse navbar-collapse" id="select" style={{marginTop: "80px"}}>
-                        <div className="navbar-nav" style={{backgroundColor: "yellow"}}>
-                            <div className="navbar-nav rounded border justify-content-center">
-                                <div className="row text-center">
-                                    <div className="nav-item col-3">
-                                        <div className="dropdown">
-                                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div className="col collapse navbar-collapse fixed-top" id="select" style={{marginTop:"60px"}}>
+                        <div className="navbar-nav border" style={{backgroundColor: "#4f5b62"}}>
+                                <div className="nav-item row " style={{margin:"5px"}} >
+                                    
+                                    
+                                    
+                                    
+                                    <div className="dropdown col justify-content-center" >
+                                        <div className="input-group text-center" >
+                                            <input type="search" className="form-control rounded" placeholder="Search videogame..." aria-label="Search" aria-describedby="search-addon" onChange={(e) => handleInputChange(e)} id="searchBar" />
+                                            <button type="submit" onClick={(e) => handleSubmit(e)} className="btn btn-dark">search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div className="navbar-nav justify-content-center">
+                                <div className="row text-center" style={{margin:"5px"}} >
+                                    <div className="nav-item col-lg-3 col-md-6 col-sm-12 " >
+                                        <div className="dropdown"  >
+                                            <button style={{width:"100%"}} className="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                                                 Genres
                                             </button>
-                                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div className="dropdown-menu overflow-auto border" aria-labelledby="dropdownMenuButton" style={{height:"350px", backgroundColor: "#4f5b62"}}>
                                                 <form className="px-4 py-3">
-                                                    <div >
+                                                    <div className="">
                                                         <ul >
                                                             {   
                                                                 genres.map(el => { return(
@@ -175,60 +187,52 @@ export default function Home(){
                                         </div>
                                                             
                                     </div>
-                                    <div className="nav-item col-3">
+                                    <div className="nav-item col-lg-3 col-md-6 col-sm-12">
                                         <div className="dropdown">
-                                            <button className="btn btn-secondary dropdown-toggle" type="button" id="orderFilter" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button style={{width:"100%"}} className="btn btn-dark dropdown-toggle" type="button" id="orderFilter" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Order by A-Z
                                             </button>
-                                            <div onClick={e => {handleOrderByName(e)}} id="selectA-Z" className="dropdown-menu" aria-labelledby="orderFilter">
-                                                <option value="a-z" className="dropdown-item">A-Z</option>
-                                                <option value="z-a" className="dropdown-item">Z-A</option>
+                                            <div onClick={e => {handleOrderByName(e)}} id="selectA-Z" className="dropdown-menu border" aria-labelledby="orderFilter" style={{backgroundColor: "#4f5b62"}}>
+                                                <span value="a-z" className="dropdown-item" style={{color: "#ffffff"}}>A-Z</span>
+                                                <span value="z-a" className="dropdown-item" style={{color: "#ffffff"}}>Z-A</span>
                                             </div>
                                         </div>
                                     </div>
                                 
-                                    <div className="nav-item col-3">
+                                    <div className="nav-item col-lg-3 col-md-6 col-sm-12">
                                         <div className="dropdown">
-                                            <button  className="btn btn-secondary dropdown-toggle" type="button" id="ratingFilter" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button style={{width:"100%"}} className="btn btn-dark dropdown-toggle" type="button" id="ratingFilter" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Order by Rating
                                             </button>
-                                            <div onClick={e => {handleOrderByRating(e)}} id="selectRating" className="dropdown-menu" aria-labelledby="ratingFilter">
-                                                <option value="-rating" className="dropdown-item">- Rating</option>
-                                                <option value="+rating" className="dropdown-item">+ Rating</option>
+                                            <div onClick={e => {handleOrderByRating(e)}} id="selectRating" className="dropdown-menu border" aria-labelledby="ratingFilter" style={{backgroundColor: "#4f5b62"}}>
+                                                <option value="-rating" className="dropdown-item" style={{color: "#ffffff"}}>- Rating</option>
+                                                <option value="+rating" className="dropdown-item" style={{color: "#ffffff"}}>+ Rating</option>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="nav-item col-3">
+                                    <div className="nav-item col-lg-3 col-md-6 col-sm-12">
                                         <div className="dropdown">
-                                            <button  className="btn btn-secondary dropdown-toggle" type="button" id="createFilter" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button style={{width:"100%"}} className="btn btn-dark dropdown-toggle" type="button" id="createFilter" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Filter DB-API
                                             </button>
-                                            <div onClick={e => {handleFilterCreate(e)}} id="selectDBApi" className="dropdown-menu" aria-labelledby="createFilter">
-                                                <option value="titleSelect" className="dropdown-item">All</option>
-                                                <option value="Create" className="dropdown-item">Create</option>
-                                                <option value="Existent" className="dropdown-item">Existent</option>
+                                            <div onClick={e => {handleFilterCreate(e)}} id="selectDBApi" className="dropdown-menu border" aria-labelledby="createFilter" style={{backgroundColor: "#4f5b62"}}>
+                                                <option value="titleSelect" className="dropdown-item" style={{color: "#ffffff"}}>All</option>
+                                                <option value="Create" className="dropdown-item" style={{color: "#ffffff"}}>Create</option>
+                                                <option value="Existent" className="dropdown-item" style={{color: "#ffffff"}}>Existent</option>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="nav-item">
-                                    <div className="dropdown">
-                                        <button onClick={e => {handleClick(e)}} className={styles.btnHome}>Refresh</button>
-                                    </div>
-                                </div>
-                                <div className="nav-item">
-                                    <div className="dropdown">
-                                        <div className="" style={{width: "100%"}}>
-                                            <input type="text" placeholder="Search videogame..." onChange={(e) => handleInputChange(e)} id="searchBar"/>
-                                        </div>
-                                        <div className="">
-                                            <button type='submit' onClick={(e) => handleSubmit(e)} className={styles.btnHome}>Search</button>
+                                <div className="row text-center" style={{margin:"5px"}}>
+                                    <div className="nav-item col-md-6">
+                                        <div className="dropdown">
+                                            <button style={{width:"100%"}} onClick={e => {handleClick(e)}} className="btn btn-dark">Refresh</button>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="nav-item">
-                                    <div className="dropdown">
-                                        <Link to='/videogame' className={styles.containerCreateHome}><button className={styles.createHome}>New Videogame</button></Link>
+                                    <div className="nav-item col-md-6  col-sm-12">
+                                        <div className="dropdown">
+                                            <Link to='/videogame' className={styles.containerCreateHome}><button style={{width:"100%"}} className="btn btn-dark">New Videogame</button></Link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -236,6 +240,50 @@ export default function Home(){
                     </div>
                 </div>
                 
+                
+                
+            </div>
+
+            <div className="row container-fluid justify-content-center" style={{paddingTop:"10px", paddingBottom:"100px", marginLeft:"0"}}>
+                
+
+                <div className="col ">
+                    <div className="row equal justify-content-center" style={{backgroundColor:"#4f5b62"}}>
+
+                        {
+                            currentVideogames === "Videogame not f" || (currentVideogames.length === 0 && (genre.length > 0 || filterApiDb !== "titleSelect")) ?
+                            <p>No videogames found</p> :
+                            currentVideogames.length > 0 ?
+                            
+                            currentVideogames.map( el => {
+                                return (
+                                    <div className="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center align-items-center" key={el.id}>
+                                    <div className="text-center"   style={{padding:"1%", height:"95%", width:"95%"}}>
+                                        <Link to = {"/videogame/" + el.id} className={styles.linkCardHome}>
+
+                                            <Card
+                                                name={el.name}
+                                                rating={el.rating}
+                                                background_image={el.background_image}
+                                                genres={el.genres}
+                                                />
+                                           
+                                        </Link>
+                                    </div>
+                                    </div>
+                                )
+                            }) :
+                            <div className="text-center" style={{ marginTop:"200px", paddingBottom:"200px"}}>
+                                <div className="spinner-border" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>    
+            <nav className="navbar fixed-bottom justify-content-center" style={{backgroundColor: "#000a12"}}>
                 <div className={styles.pagedHome}>
                     {
                         currentVideogames !== "Videogame not f" ?
@@ -250,39 +298,7 @@ export default function Home(){
                         <p></p>
                     }
                 </div>
-                
-            </div>
-
-            <div className="row">
-                
-
-                <div className="col">
-                    <div className="row equal">
-
-                        {
-                            currentVideogames === "Videogame not f" || (currentVideogames.length === 0 && (genre.length > 0 || filterApiDb !== "titleSelect")) ?
-                            <p>No videogames found</p> :
-                            currentVideogames.length > 0 ?
-                            currentVideogames.map( el => {
-                                return (
-                                    <div className="col-sm-12 col-md-6 col-lg-4 text-center border" key={el.id}  style={{backgroundColor:"blue"}}>
-                                        <Link to = {"/videogame/" + el.id} className={styles.linkCardHome}>
-                                            <Card
-                                                name={el.name}
-                                                rating={el.rating}
-                                                background_image={el.background_image}
-                                                genres={el.genres}/>
-                                        </Link>
-                                    </div>
-                                )
-                            }) :
-                            <p>Loading...</p>
-                        }
-
-                    </div>
-                </div>
-            </div>    
-
+            </nav>
         </div>
 
     )

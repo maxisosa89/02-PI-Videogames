@@ -14,20 +14,20 @@ export default function Paged ({videogamesPerPage, allVideogames, paged, pagedPr
         <div>
             <ul className="pagination justify-content-center">
                 <li className="page-item">
-                    <button className="page-link" aria-label="Previous" onClick={() => pagedPrev()}>
+                    <button className="page-link" aria-label="Previous" onClick={() => pagedPrev()} style={{backgroundColor:"#263238", color: "#ffffff"}}>
                         <span aria-hidden="true">&laquo;</span>
                     </button>
                 </li>
                 {
                     pageNumber && pageNumber.map( el => (
                         <li key={el} className="page-item" id={el}>
-                            <button onClick={() => paged(el, pageNumber)} className="page-link">{el}</button>
+                            <button onClick={() => paged(el, pageNumber)} className="page-link" style={{backgroundColor:"#263238", color: "#ffffff"}}>{el}</button>
                         </li>
                     ))
                     
                 }
                 <li className="page-item">
-                    <button className="page-link" aria-label="Next" onClick={() => pagedNext(pageNumber.length)}>
+                    <button className="page-link" aria-label="Next" onClick={() => pagedNext(pageNumber.length)} style={{backgroundColor:"#263238", color: "#ffffff"}}>
                         <span aria-hidden="true">&raquo;</span>
                     </button>
                 </li>
