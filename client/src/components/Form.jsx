@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { postVideogame, getGenres } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from './styles/Form.module.css'
-
+import {ArrowLeftIcon} from '@primer/octicons-react'
 function validate(input) {
     let errors = {};
     if(!input.name || !input.description || !input.platforms){
@@ -53,10 +53,16 @@ export default function Form(){
     }
 
     function handleSelect(e){
-        if(!input.platforms.includes(e.target.value) && e.target.value !== "platforms"){
+        
+        if(e.target.checked){
             setInput({
                 ...input,
                 platforms: [...input.platforms, e.target.value]
+            })
+        } else {
+            setInput({
+                ...input,
+                platforms: input.platforms.filter(el => el !== e.target.value)
             })
         }
     }
@@ -106,111 +112,170 @@ export default function Form(){
     }
 
     return (
-        <div className={styles.containerGlobalForm}>
-            <nav className={styles.navForm}>
-                <Link to = '/' className={styles.containerTitleForm}>
-                    <h3 className={styles.titleForm}>Videogames</h3>
-                </Link>
-                <Link to = '/home'>
-                    <button className={styles.btnForm}>Go home</button>
-                </Link>
+        <div className={styles.containerGlobalForm} style={{backgroundColor: "#4f5b62"}}>
+            <nav className="navbar fixed-top navbar-dark justify-content-center" style={{backgroundColor: "#000a12"}}>
+
+                <Link to='/home'><button className="btn btn-dark"><ArrowLeftIcon size={24} /></button></Link>
             </nav>
-            <div className={styles.containerInfoForm}>
-                <h1>Create new videogame</h1>
-                <form onSubmit={e => handleSubmit(e)}>
-                <div className={styles.contaierThreeDivs}>
-                    <div className={styles.containerDivOne}>
-                        <h4>Name *: </h4>
-                        <input
-                            type="text"
-                            autoComplete="off"
-                            name="name"
-                            onChange={e => handleChange(e)}/>
-                        <h4>Released: </h4>
-                        {
-                            errors.dateType && (
-                                <p>{errors.dateType}</p> )
-                        }
-                        <input
-                            type="text"
-                            autoComplete="off"
-                            name="released"
-                            onChange={e => handleChange(e)}/>
-                        <h4>Rating: </h4>
-                        {
-                            errors.ratingRange && (
-                                <p>{errors.ratingRange}</p> )
-                        }
-                        <input
-                            type="number"
-                            min= "0"
-                            max= "5"
-                            step="0.01"
-                            name="rating"
-                            onChange={e => handleChange(e)}/>
-                        <h4>Image URL: </h4>
-                        {
-                            errors.imageUrl && (
-                                <p>{errors.imageUrl}</p> )
-                        }
-                        <input
-                            type="text"
-                            name="background_image"
-                            onChange={e => handleChange(e)}/>
-                        <h4>Platforms *: </h4>
-                        <select onChange={e => handleSelect(e)}>
-                        <option value="platforms">Platforms</option>
-                        {
-                            platforms.map(el => (
-                                <option value={el} key={el}>
-                                    {el}
-                                </option>
-                            ))
-                        }
-                        </select >
-                        <h4>Description *: </h4>
-                        <input
-                            type="text"
-                            autoComplete="off"
-                            name="description"
-                            onChange={e => handleChange(e)}/>
-                        {
-                            errors.error && (
-                                <p>{errors.error}</p>
-                            )
-                        }
-                        </div>
-                        <div className={styles.containerDivTwo}>
-                        <h4>Platforms selected:</h4>
-                        <ul className={styles.ulForm}>
-                            {
-                                input.platforms.map(el => (
-                                    <li key={el}>{el}<button type="button" onClick={() => handleDelete(el)} className={styles.btnXForm}>X</button></li>
-                                ))
-                            }         
-                        </ul>
-                        </div>
-                        <div className={styles.containerDivThree}>
-                            <h4>Genres: </h4>
-                            <ul>
+            <div className="container" style={{paddingTop: "70px", paddingBottom: "15px"}}>
+                <div className="row justify-content-center rounded" style={{backgroundColor: "#263238"}}>
+                    <div className="col-12 text-center" style={{paddingTop: "15px", paddingBottom: "15px"}}>
+                        <h1>Create new videogame</h1>
+                    </div>
+                    <form onSubmit={e => handleSubmit(e)}>
+                    
+                        <div className="row justify-content-center ">
+                            <div className="col-md-6 col-sm-12  text-center">
+                                <div >
+                                    <h4>Name *: </h4>
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        autoComplete="off"
+                                        name="name"
+                                        onChange={e => handleChange(e)}
+                                        className="form-control-md"/>
+                                </div>
+                            </div>
+                            <div className="col-md-6 col-sm-12  text-center">
+                                <div>
+                                    <h4>Released: </h4>
+                                        {
+                                            errors.dateType && (
+                                                <p>{errors.dateType}</p> )
+                                        }
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        autoComplete="off"
+                                        name="released"
+                                        onChange={e => handleChange(e)}
+                                        className="form-control-md"/>
+                                </div>
+                            </div>
+                            <div className="col-md-6 col-sm-12  text-center">
+                                <div>
+                                    <h4>Image URL: </h4>
+                                    {
+                                        errors.imageUrl && (
+                                            <p>{errors.imageUrl}</p> )
+                                    }
+                                </div>
+                                <div>
+                                    <input
+                                        type="text"
+                                        name="background_image"
+                                        onChange={e => handleChange(e)}
+                                        className="form-control-md"/>
+                                </div>
+                            </div>
+                            <div className="col-md-6 col-sm-12  text-center">
+                                <div>
+                                    <h4>Rating: </h4>
+                                </div>
+                                <div>
+                                    {
+                                        errors.ratingRange && (
+                                            <p>{errors.ratingRange}</p> )
+                                    }
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        min= "0"
+                                        max= "5"
+                                        step="0.01"
+                                        name="rating"
+                                        onChange={e => handleChange(e)}
+                                        className="form-control-md"/>
+                                </div>
+                            </div>
+                            
+                            <div className="col-12  text-center" style={{paddingBottom: "25px"}}>
+                                <h4>Description *: </h4>
+                                <input
+                                    type="text"
+                                    autoComplete="off"
+                                    name="description"
+                                    onChange={e => handleChange(e)}
+                                    className="form-control-lg"
+                                    style={{width: "100%", height:"100px"}}/>
                                 {
-                                    genres.map(el => (
-                                        <li key={el.name}>
-                                            <input
-                                                type="checkbox"
-                                                value={el.name}
-                                                id={el.name}
-                                                onChange={e => handleCheck(e)}
-                                            />
-                                            {el.name}
-                                        </li>
-                                    ))
+                                    errors.error && (
+                                        <p>{errors.error}</p>
+                                    )
                                 }
-                            </ul>
+                            </div>
+                            <div className="row">
+                                <div className="dropdown col-md-6 col-sm-12" style={{marginBottom: "10px"}} >
+                                    <button style={{width:"100%"}} className="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                        Platforms *
+                                    </button>
+                                    <div className="dropdown-menu overflow-auto " aria-labelledby="dropdownMenuButton" style={{height:"350px", backgroundColor: "#4f5b62"}}>
+                                        <form className="px-4 py-3">
+                                            <div className="">
+                                                <ul >
+                                                    {   
+                                                        platforms.map(el => { return(
+                                                            <li key={el.id} className="form-check">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    value={el}
+                                                                    id={el}
+                                                                    onChange={e => {handleSelect(e)}}
+                                                                    className="form-check-input"
+                                                                />
+                                                                <label className="form-check-label" htmlFor={el}>{el}</label>
+                                                            </li>
+                                                        )})
+                                                        
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            
+                                <div className="dropdown col-md-6 col-sm-12" style={{marginBottom: "10px"}} >
+                                    <button style={{width:"100%"}} className="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                        Genres
+                                    </button>
+                                    <div className="dropdown-menu overflow-auto " aria-labelledby="dropdownMenuButton" style={{height:"350px", backgroundColor: "#4f5b62"}}>
+                                        <form className="px-4 py-3">
+                                            <div className="">
+                                                <ul >
+                                                    {   
+                                                        genres.map(el => { return(
+                                                            <li key={el.id} className="form-check">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    value={el.name}
+                                                                    id={el.name}
+                                                                    onChange={e => {handleCheck(e)}}
+                                                                    className="form-check-input"
+                                                                />
+                                                                <label className="form-check-label" htmlFor={el.name}>{el.name}</label>
+                                                            </li>
+                                                        )})
+                                                        
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            <div className="col-12 text-center">
+                                <button type='submit' className="btn btn-dark" style={{marginBottom: "25px", marginTop: "25px"}}>Create</button>
+                            </div>
+                            </div>
                         </div>
+                        
+                    
+                        
+                    </form>
                 </div>
-                <button type='submit' className={styles.btnCreateForm}>Create</button>
-                </form>
             </div>
         </div>
     )
