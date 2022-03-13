@@ -248,17 +248,16 @@ export default function Home(){
                 
 
                 <div className="col ">
-                    <div className="row equal justify-content-center" style={{backgroundColor:"#4f5b62"}}>
+                    <div className="row equal justify-content-center " style={{backgroundColor:"#4f5b62"}}>
 
                         {
-                            currentVideogames === "Videogame not f" || (currentVideogames.length === 0 && (genre.length > 0 || filterApiDb !== "titleSelect")) ?
-                            <p>No videogames found</p> :
+                            currentVideogames === "Videogame no" || (currentVideogames.length === 0 && (genre.length > 0 || filterApiDb !== "titleSelect")) ?
+                            <h1>No videogames found</h1> :
                             currentVideogames.length > 0 ?
-                            
                             currentVideogames.map( el => {
                                 return (
                                     <div className="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center align-items-center" key={el.id}>
-                                    <div className="text-center"   style={{padding:"1%", height:"95%", width:"95%"}}>
+                                    <div className="text-center "   style={{padding:"1%", height:"95%", width:"95%"}}>
                                         <Link to = {"/videogame/" + el.id} className={styles.linkCardHome}>
 
                                             <Card
@@ -286,7 +285,7 @@ export default function Home(){
             <nav className="navbar fixed-bottom justify-content-center" style={{backgroundColor: "#000a12"}}>
                 <div className={styles.pagedHome}>
                     {
-                        currentVideogames !== "Videogame not f" ?
+                        currentVideogames !== "Videogame no" ?
                         <Paged 
                             videogamesPerPage={videogamesPerPage}
                             allVideogames={allVideogames.length}

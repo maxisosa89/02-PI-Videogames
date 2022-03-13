@@ -6,8 +6,6 @@ import Form from './components/Form'
 import Detail from './components/Detail'
 
 function App() {
-  let heightScreen = window.screen.availHeight
-  console.log(heightScreen)
 
   return (
     <BrowserRouter>
