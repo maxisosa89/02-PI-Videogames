@@ -193,8 +193,8 @@ export default function Home(){
                                                 Order by A-Z
                                             </button>
                                             <div onClick={e => {handleOrderByName(e)}} id="selectA-Z" className="dropdown-menu border" aria-labelledby="orderFilter" style={{backgroundColor: "#4f5b62"}}>
-                                                <span value="a-z" className="dropdown-item" style={{color: "#ffffff"}}>A-Z</span>
-                                                <span value="z-a" className="dropdown-item" style={{color: "#ffffff"}}>Z-A</span>
+                                                <option value="a-z" className="dropdown-item" style={{color: "#ffffff"}}>A-Z</option>
+                                                <option value="z-a" className="dropdown-item" style={{color: "#ffffff"}}>Z-A</option>
                                             </div>
                                         </div>
                                     </div>
